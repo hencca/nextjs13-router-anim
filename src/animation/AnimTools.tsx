@@ -3,12 +3,11 @@
 import React, { createContext, useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 
-const contextObject = {
-  state: "NORMAL",
-};
+const AnimTools = createContext();
 
- const AnimContext = createContext(contextObject);
-
+/**
+ * This needs to be somewhere up in the hierachry wrapping your app
+ */
 export const AnimContextWrapper = ({
   children,
 }: {
@@ -27,16 +26,16 @@ export const AnimContextWrapper = ({
 
   const contextObject = {
     animClassName,
-    navigate,
   };
 
   return (
-    <AnimContext.Provider value={contextObject}>
-      {children}
-    </AnimContext.Provider>
+    <AnimTools.Provider value={contextObject}>{children}</AnimTools.Provider>
   );
 };
 
+/**
+ * This should wrap the portion of your page you wish to animate
+ */
 export const AnimWrapper = ({ children }: { children: React.ReactElement }) => {
   const context = useAnimContext();
 
@@ -44,19 +43,29 @@ export const AnimWrapper = ({ children }: { children: React.ReactElement }) => {
 };
 
 export function useAnimContext() {
-  return useContext(AnimContext);
+  return useContext(AnimTools);
 }
 
-
-
-export const AnimLink = ({ children, href, ...rest }: { href:string, children: React.ReactElement }) => {
+/**
+ * Use this for links in your navigation <AnimLink href="/contact" />
+ */
+export const AnimLink = ({
+  children,
+  href,
+  ...rest
+}: {
+  href: string;
+  children: React.ReactElement;
+}) => {
   const ctx = useAnimContext();
   function hClick(e) {
-    e.preventDefault()
-    ctx.navigate(href)
+    e.preventDefault();
+    ctx.navigate(href);
   }
 
-  return <a onClick={hClick} href={href} {...rest}>{children}</a>
-
-
-}
+  return (
+    <a onClick={hClick} href={href} {...rest}>
+      {children}
+    </a>
+  );
+};
