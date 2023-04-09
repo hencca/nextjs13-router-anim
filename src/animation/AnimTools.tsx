@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 
-const AnimTools = createContext();
+const AnimTools = createContext({});
 
 /**
  * This needs to be somewhere up in the hierachry wrapping your app
