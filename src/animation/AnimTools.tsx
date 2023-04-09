@@ -3,7 +3,10 @@
 import React, { createContext, useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 
-const AnimTools = createContext({});
+const AnimTools = createContext({
+  animClassName: "",
+  navigate: (str) => undefined,
+});
 
 /**
  * This needs to be somewhere up in the hierachry wrapping your app
@@ -26,6 +29,7 @@ export const AnimContextWrapper = ({
 
   const contextObject = {
     animClassName,
+    navigate,
   };
 
   return (
@@ -36,7 +40,7 @@ export const AnimContextWrapper = ({
 /**
  * This should wrap the portion of your page you wish to animate
  */
-export const AnimWrapper = ({ children }: { children: React.ReactElement }) => {
+export const AnimWrapper = ({ children }: { children: React.ReactNode }) => {
   const context = useAnimContext();
 
   return <div className={context.animClassName}>{children}</div>;
@@ -55,7 +59,7 @@ export const AnimLink = ({
   ...rest
 }: {
   href: string;
-  children: React.ReactElement;
+  children: React.ReactElement | string;
 }) => {
   const ctx = useAnimContext();
   function hClick(e) {
