@@ -1,4 +1,7 @@
 import './globals.css'
+import AnimNavi from "@/animation/AnimNavi";
+import {AnimContext, AnimWrapper, AnimContextWrapper, useAnimContext, AnimLink} from "@/animation/AnimContext";
+import {useRouter} from "next/navigation";
 
 export const metadata = {
   title: 'Create Next App',
@@ -12,7 +15,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+        <body>
+      <AnimContextWrapper>
+          <nav>
+              <AnimLink href={"/"}>Home</AnimLink>
+              <AnimLink href={"/about"}>About us</AnimLink>
+              <AnimLink href={"/contact"}>contact us</AnimLink>
+          </nav>
+             <AnimWrapper> {children}</AnimWrapper>
+      </AnimContextWrapper>
+      </body>
     </html>
   )
 }
+
