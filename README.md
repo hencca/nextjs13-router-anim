@@ -9,3 +9,7 @@ using the old API with _app.tsx file.
 Here, I'm using the React Context API, and then delaying the route change enough to let 
 the current page animate out.
 
+
+DEMO:
+
+https://nextjs13-router-anim-hc1ueaz5b-hencca-s-team.vercel.app/about
